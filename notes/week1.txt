@@ -1,0 +1,90 @@
+Here’s a **detailed breakdown of Week 1 (Day-by-Day)** tasks for your supermarket POS system project using **React (Frontend)** and **FastAPI (Backend)**. This plan assumes WyneZ is working solo with about **4–6 hours per day**.
+
+---
+
+## ✅ **Week 1: Core Setup & Backend API Foundation**
+
+### 🔹 **Day 1 – Project Initialization**
+
+**Goal**: Set up development environments, Git repos, and structure both frontend and backend.
+
+* [ ] Create two GitHub repositories:
+
+  * `pos-backend-fastapi`
+  * `pos-frontend-react`
+* [ ] Initialize FastAPI project:
+
+  * Use `poetry` or `pipenv`
+  * Setup folder structure (`app/`, `routers/`, `models/`, etc.)
+* [ ] Initialize React project with Vite or CRA
+
+  * Set up file structure: `components/`, `pages/`, `services/`
+* [ ] Set up basic README files and push to GitHub
+* [ ] Setup `.env` for secrets, and `.gitignore`
+
+### 🔹 **Day 2 – Database Design & Models**
+
+**Goal**: Define and build core DB models and relationships.
+
+* [ ] Design schema for:
+
+  * `User`, `Product`, `Category`, `Inventory`, `Sale`, `SaleItem`
+* [ ] Use SQLAlchemy + Alembic for migration
+* [ ] Create DB connection utility
+* [ ] Migrate database and seed sample products
+
+> 💡 You can also create a local `dev.db` using SQLite for speed.
+
+### 🔹 **Day 3 – Auth System**
+
+**Goal**: Add secure JWT-based login for staff/admin.
+
+* [ ] Install `fastapi-users` or implement custom login system
+* [ ] Create endpoints:
+
+  * `/register`, `/login`, `/me`, `/logout`
+* [ ] Use JWT for access tokens
+* [ ] Set roles: Admin, Cashier
+* [ ] Test auth using Swagger UI
+
+### 🔹 **Day 4 – Product & Inventory APIs**
+
+**Goal**: Build product browsing, category filtering, and inventory update logic.
+
+* [ ] Endpoints:
+
+  * `GET /products`
+  * `GET /products/{id}`
+  * `POST /products` (admin only)
+  * `PUT /products/{id}`
+  * `GET /categories`
+* [ ] Add basic filtering/search (by name, category)
+* [ ] Inventory tracking:
+
+  * `quantity`, `low_stock_alert`
+
+### 🔹 **Day 5 – Sales & Cart Logic**
+
+**Goal**: Enable sale creation and prepare data flow for POS.
+
+* [ ] Define cart logic (temporary session in frontend)
+* [ ] Endpoints:
+
+  * `POST /sales/` – Accepts items, qty, and records sale
+  * `GET /sales/{id}` – View single receipt
+  * `GET /sales/` – List all sales (filter by date, cashier)
+* [ ] Auto-deduct stock on sale
+* [ ] Return basic success JSON to frontend
+
+---
+
+## 🧪 Optional End-of-Week Tasks
+
+* [ ] Write unit tests for product & sale routes
+* [ ] Set up CORS for connecting frontend next week
+* [ ] Deploy backend to Render or Railway (optional for testing)
+
+---
+
+Let me know if you'd like a **Notion-compatible version** of this checklist, or if you want **Week 2** tasks next.
+

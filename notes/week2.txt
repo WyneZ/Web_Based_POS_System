@@ -1,0 +1,91 @@
+Here’s your detailed **Week 2 Day-by-Day Plan** for your **Supermarket POS System** using **React (Frontend)** and **FastAPI (Backend)** — assuming a monorepo or two separate repos with backend APIs completed from Week 1.
+
+---
+
+## ✅ **Week 2: Frontend UI & Integration + Real-time Features**
+
+---
+
+### 🔹 **Day 6 – POS UI Layout + Routing**
+
+**Goal**: Scaffold the frontend app and basic user interface.
+
+* [ ] Setup page routing with React Router (e.g., `/login`, `/pos`, `/products`, `/sales`)
+* [ ] Create layout component (Sidebar, Header)
+* [ ] Build basic login page UI (form, validation)
+* [ ] Create protected route logic using JWT token
+* [ ] Use localStorage or Zustand/Redux to store auth token
+
+---
+
+### 🔹 **Day 7 – Product Listing + Search**
+
+**Goal**: Connect product list from backend to frontend.
+
+* [ ] Create ProductService (`getAllProducts()`, `getById()`)
+* [ ] Fetch products using `axios` or `fetch`
+* [ ] Render products in a table or card list
+* [ ] Add category filter and search input
+* [ ] Display stock levels and product details
+
+---
+
+### 🔹 **Day 8 – POS Cart Logic**
+
+**Goal**: Implement add-to-cart and cart UI logic.
+
+* [ ] Create `CartContext` or global state to manage items
+* [ ] Add product to cart via button or barcode scan input
+* [ ] Show cart panel (item name, quantity, subtotal)
+* [ ] Enable quantity updates and removal from cart
+* [ ] Show cart total
+
+---
+
+### 🔹 **Day 9 – Sale Submission + Receipt**
+
+**Goal**: Integrate frontend cart with FastAPI `/sales` endpoint.
+
+* [ ] On "Checkout" click → POST cart data to backend
+* [ ] Handle response and display sale receipt
+* [ ] Show toast notification on success
+* [ ] Clear cart after success
+* [ ] Show sale receipt (with sale ID, date, items, total)
+
+---
+
+### 🔹 **Day 10 – Real-Time WebSocket Printer + UI Feedback**
+
+**Goal**: Implement WebSocket connection to send receipts to printer or admin dashboard.
+
+* [ ] Backend: Setup `FastAPI WebSocket` route (if not done in Week 1)
+* [ ] Frontend: Connect WebSocket on successful sale
+* [ ] Send JSON data with receipt info
+* [ ] Optionally show "Sent to printer" status
+* [ ] Add fallback to use API if WebSocket fails
+
+---
+
+## 🧪 Optional / Bonus for Week 2
+
+* [ ] Add barcode scan input (auto-focus, press enter to add)
+* [ ] Display error if scanned product doesn’t exist
+* [ ] Add staff name to sales from `/me` endpoint
+* [ ] Store sales in localStorage if offline (for sync later)
+
+---
+
+## 🧭 Recap of Week 2 Deliverables
+
+| Module       | What’s Completed                         |
+| ------------ | ---------------------------------------- |
+| POS UI       | Fully interactive POS interface          |
+| Auth         | Login, token storage, protected routes   |
+| Product List | Integrated with backend, search & filter |
+| Cart & Sales | Add to cart, submit sale, show receipt   |
+| WebSockets   | Real-time push for receipts              |
+
+---
+
+Would you like a **task checklist version (Notion-ready)** of this Week 2 plan, or should we move on to **Week 3** planning?
+

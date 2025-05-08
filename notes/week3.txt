@@ -1,0 +1,103 @@
+Here’s your detailed **Week 3 Day-by-Day Plan** for the **Supermarket POS System** using **React (Frontend)** + **FastAPI (Backend)** — focused on advanced features, polishing, testing, and deployment.
+
+---
+
+## ✅ **Week 3: Advanced Features, Testing & Deployment**
+
+---
+
+### 🔹 **Day 11 – Discount, Returns, and Refund Logic**
+
+**Goal**: Enable discounts and simple return/refund processing.
+
+* [ ] Update cart UI to allow:
+
+  * Percentage or fixed-amount discounts per item or entire cart
+* [ ] Backend: Extend `/sales` endpoint to accept discounts
+* [ ] Create “Returns” page:
+
+  * Search past sale by ID
+  * Select items to return
+  * Backend: Create `POST /returns` or `PATCH /sales/{id}/return`
+* [ ] Inventory auto-restock on return
+
+---
+
+### 🔹 **Day 12 – Role-based Access & Admin Features**
+
+**Goal**: Different access levels for cashier vs admin.
+
+* [ ] Backend: Ensure endpoints are protected by role (admin/cashier)
+* [ ] Frontend:
+
+  * Only show reports/settings to admin
+  * Cashiers restricted to POS and sales pages
+* [ ] Add user management UI for admins (optional):
+
+  * View users
+  * Reset password
+
+---
+
+### 🔹 **Day 13 – Reporting Dashboard**
+
+**Goal**: Provide an analytics view of sales performance.
+
+* [ ] Backend:
+
+  * `GET /reports/sales?from=...&to=...`
+  * Return total sales, top products, revenue, etc.
+* [ ] Frontend:
+
+  * Graphs with `Recharts` or `Chart.js`
+  * Filters by date range
+  * Total revenue, # of transactions, top 5 products
+
+---
+
+### 🔹 **Day 14 – Testing & Bug Fixes**
+
+**Goal**: Add coverage and catch breaking issues.
+
+* [ ] Backend tests:
+
+  * Use `pytest` for key endpoints (`products`, `sales`, `auth`)
+* [ ] Frontend:
+
+  * Manual UI tests
+  * Optionally add `Vitest` or `Jest` for cart logic
+* [ ] Fix any 404s, race conditions, bad error handling
+
+---
+
+### 🔹 **Day 15 – Deployment & Documentation**
+
+**Goal**: Finalize deployment and handoff assets.
+
+* [ ] Deploy backend (Render, Railway, or VPS)
+* [ ] Deploy frontend (Vercel, Netlify, or serve via FastAPI)
+* [ ] Add `.env.example`, README setup instructions
+* [ ] Final UI polishing:
+
+  * Responsive layout
+  * Mobile-friendly tweaks
+* [ ] Record short video demo or screenshots
+* [ ] Prepare handover or client pitch deck (optional)
+
+---
+
+## ✅ Week 3 Deliverables Summary
+
+| Feature Area | Delivered Outcome                          |
+| ------------ | ------------------------------------------ |
+| Discounts    | Sale-level and item-level discounts        |
+| Returns      | Simple return flow with inventory restock  |
+| Admin Access | RBAC for sensitive operations              |
+| Reporting    | Revenue charts, daily summary, top sellers |
+| Testing      | Unit tests and manual verification         |
+| Deployment   | Live URL + ready-to-deploy repo            |
+
+---
+
+Let me know if you want this broken into a **Notion Kanban board**, or if you want a **ready-to-use monorepo boilerplate** for this plan.
+
