@@ -1,0 +1,126 @@
+-----Project Flow-----
+
+Frontend (React) <-> API (DRF) <-> PostgreSQL
+        |
+    Cashier UI / Admin Dashboard
+
+
+> User Roles:
+
+Cashier         : Sales transactions, barcode scanning, receipt printing
+Admin/Manager   : Inventory, sales reports, user roles
+Stock Staff     : Inventory restocking
+
+> Key Modules:
+
+1. Authentication & Authorization 
+2. Product & Inventory Management  
+3. Sales & Billing System (POS terminal)  
+4. Reports & Analytics  
+5. User & Role Management  
+
+
+
+-----Data Flow Diagram-----
+
+###   Level 0 - Context Diagram  
+
+```
+[User] ---> [Web App (React)] ---> [DRF Backend] ---> [PostgreSQL DB]
+```
+
+###   Level 1 - Modules  
+
+```plaintext
+[User]
+  |
+  |---> Login/Register --> [Auth API] --> [User Table]
+  |
+  |---> Scan/Add Product --> [Sales API] --> [Sales, Product Tables]
+  |
+  |---> Inventory Management --> [Inventory API] --> [Product, Stock, Supplier Tables]
+  |
+  |---> Reports Request --> [Reports API] --> [Sales, Products, Inventory]
+```
+
+---
+
+-----Data Model (PostgreSQL)-----
+1.User
+- id (PK)
+- username
+- email
+- password_hash
+- role (admin, cashier, stock)
+- is_active
+
+
+2.Product
+- id (PK)
+- barcode (unique)
+- name
+- category_id (FK)
+- price
+- cost_price
+- stock_quantity
+- low_stock_threshold
+- is_active
+
+3.Categor
+- id (PK)
+- name
+- description
+
+4.Supplier
+- id (PK)
+- name
+- contact_info
+
+5.StockTransaction
+- id (PK)
+- product_id (FK)
+- quantity (positive for restock, negative for removal)
+- transaction_type (restock, remove, return)
+- supplier_id (FK nullable)
+- user_id (FK)
+- timestamp
+
+6.Sale
+- id (PK)
+- cashier_id (FK to User)
+- sale_time
+- total_amount
+- payment_method (cash, card, mobile)
+
+7.SaleItem
+- id (PK)
+- sale_id (FK)
+- product_id (FK)
+- quantity
+- unit_price
+- subtotal
+
+8.Payment
+
+- id (PK)
+- sale_id (FK)
+- amount_paid
+- payment_method
+- timestamp
+
+
+
+-----Advanced Features to Consider------
+
+* Real-time inventory updates with WebSocket (Django Channels)
+* Offline-first PWA support for React (e.g., with Service Workers)
+* QR/Barcode Scanner integration (HTML5 camera API)
+* Role-based UI with React Context or Redux
+* Receipt printing via browser or dedicated printer API
+
+
+### 🔄 Alternative Stack (if needed):
+
+*   Frontend  : Next.js (if SEO or SSR needed, less relevant for POS)
+*   Backend  : FastAPI (if you want faster async APIs and don’t need Django’s ORM)
+*   DB  : Still recommend PostgreSQL, or SQLite if you want ultra-lightweight local testing

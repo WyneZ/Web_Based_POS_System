@@ -1,0 +1,87 @@
+1. Authentication & User Management (`users` app)
+
+| Endpoint              | Method | Description                 | Request Body / Params                  |
+| --------------------- | ------ | --------------------------- | -------------------------------------- |
+| `/api/auth/register/` | POST   | Register new user           | `{ username, email, password }`        |
+| `/api/auth/login/`    | POST   | Obtain JWT token            | `{ username, password }`               |
+| `/api/auth/logout/`   | POST   | Logout (invalidate token)   | -                                      |
+| `/api/auth/refresh/`  | POST   | Refresh JWT token           | `{ refresh_token }`                    |
+| `/api/users/me/`      | GET    | Get current user profile    | -                                      |
+| `/api/users/me/`      | PUT    | Update current user profile | `{ email, first_name, last_name, ...}` |
+| `/api/users/`         | GET    | List all users (Admin only) | Query params for filtering             |
+| `/api/users/<id>/`    | GET    | Get user details (Admin)    | -                                      |
+| `/api/users/<id>/`    | PUT    | Update user (Admin)         | User fields                            |
+| `/api/users/<id>/`    | DELETE | Delete user (Admin)         | -                                      |
+
+---
+
+2. Products & Categories (`products` app)
+
+| Endpoint                | Method | Description          | Request Body / Params                                   |
+| ----------------------- | ------ | -------------------- | ------------------------------------------------------- |
+| `/api/products/`        | GET    | List all products    | Filtering: `?category=`, `?search=`, pagination         |
+| `/api/products/`        | POST   | Create new product   | `{ name, barcode, price, category_id, stock_quantity }` |
+| `/api/products/<id>/`   | GET    | Get product details  | -                                                       |
+| `/api/products/<id>/`   | PUT    | Update product       | Fields to update                                        |
+| `/api/products/<id>/`   | DELETE | Delete product       | -                                                       |
+| `/api/categories/`      | GET    | List categories      | -                                                       |
+| `/api/categories/`      | POST   | Create category      | `{ name, description }`                                 |
+| `/api/categories/<id>/` | GET    | Get category details | -                                                       |
+| `/api/categories/<id>/` | PUT    | Update category      | Fields to update                                        |
+| `/api/categories/<id>/` | DELETE | Delete category      | -                                                       |
+
+---
+
+3. Sales & POS (`sales` app)
+
+| Endpoint                   | Method | Description                          | Request Body / Params                                                 |
+| -------------------------- | ------ | ------------------------------------ | --------------------------------------------------------------------- |
+| `/api/sales/`              | GET    | List all sales (filter by date/user) | `?date_from=`, `?date_to=`, `?user=`                                  |
+| `/api/sales/`              | POST   | Create a new sale (checkout)         | `{ items: [{ product_id, quantity }], payment_method, total_amount }` |
+| `/api/sales/<id>/`         | GET    | Get sale details (receipt)           | -                                                                     |
+| `/api/sales/<id>/payment/` | POST   | Record payment details               | `{ amount_paid, payment_method }`                                     |
+
+---
+
+4. Inventory Management (`inventory` app)
+
+| Endpoint                   | Method | Description                       | Request Body / Params                                             |
+| -------------------------- | ------ | --------------------------------- | ----------------------------------------------------------------- |
+| `/api/stock/`              | GET    | View current stock levels         | Optional filters                                                  |
+| `/api/stock/transactions/` | POST   | Add/remove stock (stock movement) | `{ product_id, quantity_change, reason, supplier_id (optional) }` |
+| `/api/suppliers/`          | GET    | List all suppliers                | -                                                                 |
+| `/api/suppliers/`          | POST   | Add new supplier                  | `{ name, contact_info, address }`                                 |
+| `/api/suppliers/<id>/`     | PUT    | Update supplier details           | -                                                                 |
+| `/api/suppliers/<id>/`     | DELETE | Delete supplier                   | -                                                                 |
+
+---
+
+5. Reports & Analytics (`reports` app)
+
+| Endpoint                      | Method | Description               | Request Body / Params |
+| ----------------------------- | ------ | ------------------------- | --------------------- |
+| `/api/reports/daily-sales/`   | GET    | Get daily sales summary   | `?date=YYYY-MM-DD`    |
+| `/api/reports/monthly-sales/` | GET    | Get monthly sales summary | `?month=YYYY-MM`      |
+| `/api/reports/stock-levels/`  | GET    | Current stock report      | Optional filters      |
+| `/api/reports/low-stock/`     | GET    | Products below threshold  | `?threshold=`         |
+
+---
+
+# 🔑 Authentication Notes
+
+* Use JWT tokens (e.g. via **SimpleJWT** or **djangorestframework-simplejwt**)
+* Protect endpoints with appropriate permissions (IsAuthenticated, IsAdminUser)
+* Role-based permissions for user/admin/cashier/stock roles
+
+---
+
+Example: Create Sale Request Body
+
+{
+  "items": [
+    { "product_id": 1, "quantity": 3 },
+    { "product_id": 4, "quantity": 1 }
+  ],
+  "payment_method": "cash",
+  "total_amount": 150.00
+}

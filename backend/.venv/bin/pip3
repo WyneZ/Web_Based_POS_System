@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/home/wz/Desktop/Portfolio Projects/Web_Based_POS/backend/.venv/bin/python" "$0" "$@"
+'''exec' "/home/wz/Desktop/Portfolio Projects/Web_Based_POS/backend/.venv/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re
