@@ -54,7 +54,6 @@ Stock Staff     : Inventory restocking
 - role (admin, cashier, stock)
 - is_active
 
-
 2.Product
 - id (PK)
 - barcode (unique)
@@ -66,7 +65,7 @@ Stock Staff     : Inventory restocking
 - low_stock_threshold
 - is_active
 
-3.Categor
+3.Category
 - id (PK)
 - name
 - description
@@ -92,6 +91,8 @@ Stock Staff     : Inventory restocking
 - total_amount
 - payment_method (cash, card, mobile)
 
+6.1. Receipt (Optional)
+
 7.SaleItem
 - id (PK)
 - sale_id (FK)
@@ -101,7 +102,6 @@ Stock Staff     : Inventory restocking
 - subtotal
 
 8.Payment
-
 - id (PK)
 - sale_id (FK)
 - amount_paid
@@ -119,8 +119,20 @@ Stock Staff     : Inventory restocking
 * Receipt printing via browser or dedicated printer API
 
 
-### 🔄 Alternative Stack (if needed):
+-----Alternative Stack (if needed)-----
 
 *   Frontend  : Next.js (if SEO or SSR needed, less relevant for POS)
 *   Backend  : FastAPI (if you want faster async APIs and don’t need Django’s ORM)
 *   DB  : Still recommend PostgreSQL, or SQLite if you want ultra-lightweight local testing
+
+
+--Product sample--
+| id | name | category | price | stock |
+| -- | ---- | -------- | ----- | ----- |
+| 1  | Milk | Dairy    | 2.99  | 50    |
+
+--SaleItem sample--
+| id | sale\_id | product\_id | quantity | price |
+| -- | -------- | ----------- | -------- | ----- |
+| 1  | 101      | 1           | 3        | 2.99  |
+

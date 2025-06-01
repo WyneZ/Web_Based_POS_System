@@ -1,0 +1,120 @@
+Great question. Understanding **data flow between cashier, manager, and inventory** roles is crucial for building a supermarket POS system that mirrors real-world workflows.
+
+---
+
+## 🎯 Roles Involved
+
+### 🧑‍💼 **Cashier**
+
+* Handles sales and payments
+* Interacts with POS (products, cart, receipt)
+* Cannot manage products or inventory
+
+### 🧑‍💼 **Manager**
+
+* Oversees sales, staff, inventory
+* Can add/edit products, manage users
+* Views reports and analytics
+
+### 🧑‍🔧 **Inventory Staff**
+
+* Manages stock levels, suppliers, restocking
+* Handles stock-in and stock-out entries
+
+---
+
+High-Level Data Flow Diagram
+
++-----------+       sale request       +----------+
+|  Cashier  |  --------------------->  |  Sales   |
+|           |                          |  System  |
++-----------+                          +----------+
+     |                                        |
+     | trigger stock reduce                   | update stock
+     v                                        v
++-----------+                          +--------------+
+| Inventory |  <--------------------   | Product DB   |
+|   System  |       sale event         +--------------+
++-----------+
+
++-----------+                          +-------------+
+|  Manager  |  <--------------------   | Reports DB  |
+|           |       summary            +-------------+
++-----------+
+
++-----------+                          +-------------+
+| Inventory |  --> restock -->        | Product DB  |
+|   Staff   |                          +-------------+
++-----------+
+
+---
+
+## 🔍 Detailed Data Flow Per Role
+
+---
+
+1. Cashier
+
+#### Actions:
+
+* Scans product → fetches from `/products/`
+* Adds to cart → frontend handles logic
+* Finalizes sale → POST to `/sales/`
+* Submits payment → `/sales/<id>/payment/`
+
+#### Data Flow:
+
+1. Sends sale details to **Sales API**
+2. Sales API:
+
+   * Records sale + items in `Sale` and `SaleItem`
+   * Deducts stock via **StockTransaction**
+3. Response includes receipt
+
+---
+
+2. Manager
+
+#### Actions:
+
+* Views dashboard analytics → `/reports/*`
+* Adds/updates products → `/products/`
+* Manages users → `/users/`
+* Adjusts pricing, categories
+
+#### Data Flow:
+
+1. Fetches data from `reports/`, `sales/`, `products/`
+2. Posts/updates to `products/` or `users/` APIs
+3. May approve large stock changes or returns
+
+---
+
+3. Inventory Staff
+
+#### Actions:
+
+* Adds stock → `/stock/transactions/` with positive quantity
+* Records damaged/expired stock → negative quantity
+* Manages suppliers → `/suppliers/`
+
+#### Data Flow:
+
+1. Posts stock movement
+2. System logs it as `StockTransaction`
+3. Updates `Product.stock_quantity`
+
+---
+
+Summary Table: Who Can Access What
+
+| Resource           | Cashier | Manager | Inventory Staff |
+| ------------------ | ------- | ------- | --------------- |
+| Sales (read/write) | ✅      | ✅      | ❌              |
+| Payments           | ✅      | ✅      | ❌              |
+| Products (read)    | ✅      | ✅      | ✅              |
+| Products (write)   | ❌      | ✅      | ✅              |
+| Stock transactions | ❌      | ✅      | ✅              |
+| Suppliers          | ❌      | ✅      | ✅              |
+| Reports(Sale/Inventory)| ❌  | ✅      | ❌              |
+| Users              | ❌      | ✅      | ❌              |
